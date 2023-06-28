@@ -41,7 +41,7 @@ public class FXMLController {
     private TableColumn<?, ?> clV2; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbBorough"
-    private ComboBox<?> cmbBorough; // Value injected by FXMLLoader
+    private ComboBox<String> cmbBorough; // Value injected by FXMLLoader
 
     @FXML // fx:id="tblArchi"
     private TableView<?> tblArchi; // Value injected by FXMLLoader
@@ -62,6 +62,16 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	
+    	if(this.cmbBorough.getValue() == null) {
+    		this.txtResult.setText("Seleziona un valore dalla tendina.");
+    	} else {
+    		this.model.creaGrafo(this.cmbBorough.getValue());
+    		
+    		this.txtResult.setText("Grafo creato.\n");
+    		this.txtResult.appendText("# vertici: " + this.model.getNumVertici() + "\n");
+    		this.txtResult.appendText("# archi:   " + this.model.getNumArchi() + "\n");
+    	}
     
     }
 
@@ -90,6 +100,8 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	
+    	this.cmbBorough.getItems().addAll(this.model.getTendina());
     }
 
 }
